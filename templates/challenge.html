@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<title>1A2B Game Field</title>
+		<script>
+			var ans = []
+			while(ans.length < 4){
+				var randomnumber=Math.ceil(Math.random()*9);
+				if(ans.indexOf(randomnumber) == -1)
+					ans[ans.length]=randomnumber.toString();
+			}
+			console.log(ans);
+			var round = 0;
+			var startT;
+			function doGuess()
+			{
+				if(round == 0) startT = new Date();
+				round++;
+				var guess = $("#guessBox").val().split("");
+				console.log(guess);
+				var A=0;
+				var B=0;
+				for(i=0; i<4; i++)
+				{
+					var c = guess[i];
+					if (c == ans[i]) A++;
+					else if (ans.indexOf(c) >= 0) B++;
+				}
+				$("#resultTB tbody").append($("<tr>")
+					.append($("<td>").text(guess.join("")))
+					.append($("<td>").text(A + "A" + B + "B")));
+				if(A == 4)
+				{
+					var timeCost = new Date() - startT;
+					alert('You got it! timeCost='+timeCost);
+					$("#timeCost").val(timeCost);
+					$("#roundCost").val(round);
+					$("#message").val("defaultMsg");
+					$("#sendResult").submit();				
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<h1>1A2B Game Field <small>Challenge</small></h1>
+			for debug, answer is: <span id="debug"></span><br>
+			<script>$("#debug").text(ans.join(""));</script>
+			<input type="text" id="guessBox" ><button class="btn btn-default" onClick="doGuess()">Guess</button>
+			<table id="resultTB">
+				<thead>
+					<tr><th>Input</th><th>Result</th></tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			<form id="sendResult" method="POST" action="/challenge">
+				<input type="hidden" name="account" value="{{account}}">
+				<input type="hidden" name="roundCost" id="roundCost">
+				<input type="hidden" name="timeCost" id="timeCost">
+				<input type="hidden" name="message" id="message">
+			</form>
+		</div>
+	</body>
+</html>
