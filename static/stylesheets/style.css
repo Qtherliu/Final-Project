@@ -1,0 +1,21 @@
+.container {
+	margin-top:50px;
+}
+.jumbotron {
+	margin-top:20px;
+	padding:20px;
+}
+.loginContainer{ max-width:400px; }
+.indexContainer{ max-width:1000px; }
+#resultTB{
+	background:white;
+}
+
+table {
+	margin:20px auto;
+}
+th { text-align:center; }
+.T1 { color:#5cb85c; }
+.T2 { color:#5bc0de; }
+.T3 { color:#f0ad4e; }
+.T4 { color:#d9534f; }
