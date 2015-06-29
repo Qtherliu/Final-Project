@@ -4,15 +4,34 @@
 		<meta charset='utf-8'>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/static/stylesheets/style.css">
 		<title>1A2B Game Field</title>
 	</head>
 	<body>
-		<div class="container">
-			<h1>1A2B Game Field <small>beatComputer</small></h1>
+		<div class="container text-center">
+			<h1><strong><span class="T1">1</span><span class="T2">A</span><span class="T3">2</span><span class="T4">B</span></strong> Game Field</h1>
+			<div class="btn-group" role="group" aria-label="btns">
+				<a class="btn btn-default btn-lg" href="/">Game Charts</a>
+				<a class="btn btn-default btn-lg" href="/challenge">Take a challenge</a>
+				<a class="btn btn-default btn-lg active" href="/beatComputer">Try to beat computer</a>
+				<a class="btn btn-default btn-lg" href="/userInfo/{{ account }}">See your record</a>
+				<a class="btn btn-default btn-lg" href="/logout">Logout</a>
+			</div>
+		</div>
+		<div class="container text-center loginContainer">
+			<p class="lead">{{msg}}</p>
+			<div class="jumbotron">
+				<table id="resultTB" class="table table-bordered">
+					<thead>
+						<tr><th class="warning text-center">Input</th><th class="warning text-center">Result</th></tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>	
 			<form method="POST" action="/beatComputer">
 				<input type="text" name="userNum"> <button class="btn btn-default">Send your 4 non repeated digits number!</button>
 			</form>
-			<p>{{msg}}</p>
 		</div>
 	</body>
 </html>

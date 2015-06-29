@@ -4,19 +4,20 @@
 		<meta charset='utf-8'>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/static/stylesheets/style.css">
 		<title>1A2B Game Field</title>
 	</head>
 	<body>
-		<div class="container">
-			<h1>1A2B Game Field <small>Login</small></h1>
-			<p class="lead">{{ msg }}</p>
-			{% block body %}
-			<form method="post">
-				<h4>User：</h4> <input name="username" value="{{ username }}">
-				<h4>Password：</h4> <input name="password" type="password"><br><br>
-				<button type="submit" class="btn btn-primary">Log in</button>
-			</form>
-			{% endblock %}
+		<div class="container text-center loginContainer">
+			<h1><strong><span class="T1">1</span><span class="T2">A</span><span class="T3">2</span><span class="T4">B</span></strong> Game Field</h1>
+			<p class="lead">{{ msg|safe }}</p>
+			<div class="jumbotron">
+				<form method="post" class="form-inline">
+					<h4>Account</h4> <input name="account" class="text-center form-control" value="{{ account }}">
+					<h4>Password</h4> <input class="text-center form-control" name="password" type="password"><br><br>
+					<button type="submit" class="btn btn-primary btn-lg">Log in</button>
+				</form>
+			</div>
 		</div>
 	</body>
 </html>

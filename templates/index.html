@@ -4,33 +4,34 @@
 		<meta charset='utf-8'>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/static/stylesheets/style.css">
 		<title>1A2B Game Field</title>
 	</head>
 	<body>
-		<div class="container">
-			<h1>1A2B Game Field <small>Game Charts</small></h1>
+		<div class="container text-center">
+			<h1><strong><span class="T1">1</span><span class="T2">A</span><span class="T3">2</span><span class="T4">B</span></strong> Game Field</h1>			
+			<div class="btn-group" role="group" aria-label="btns">
+				<a class="btn btn-default btn-lg active" href="/">Game Charts</a>
+				<a class="btn btn-default btn-lg" href="/challenge">Take a challenge</a>
+				<a class="btn btn-default btn-lg" href="/beatComputer">Try to beat computer</a>
+				<a class="btn btn-default btn-lg" href="/userInfo/{{ account }}">See your record</a>
+				<a class="btn btn-default btn-lg" href="/logout">Logout</a>
+			</div>
+		</div>
+		<div class="container text-center indexContainer">
 			<p class="lead">Welcome, {{ username }}</p>
-			<a class="btn btn-success" href="/challenge">Take a challenge!</a>
-			<a class="btn btn-danger" href="/beatComputer">Try to beat computer!</a>
-			<a class="btn btn-info" href="/userInfo/{{ account }}">See your record!</a>
-			<a class="btn btn-default" href="/logout">Logout</a>
-			<br>
-			<table class="table-bordered table-condensed">
+			<table class="table table-bordered table-condensed">
 				<thead>
-					<tr>
+					<tr class="info">
 						<th>Date</th>
 						<th>Account</th><th>User Name</th>
-						<th><a href="/?orderBy=RoundCost">Round Cost
-						{% if orderBy == 'RoundCost' %}
-							<span class="glyphicon glyphicon-triangle-right"></span>
-						{% else %}
+						<th><a href="/?orderBy=roundCost">Round Cost
+						{% if orderBy == 'roundCost' %}
 							<span class="glyphicon glyphicon-triangle-bottom"></span>
 						{% endif %}
 						</a></th>
-						<th><a href="/?orderBy=TimeCost">Time Cost 
-						{% if orderBy == 'TimeCost' %}
-							<span class="glyphicon glyphicon-triangle-right"></span>
-						{% else %}
+						<th><a href="/?orderBy=timeCost">Time Cost 
+						{% if orderBy == 'timeCost' %}
 							<span class="glyphicon glyphicon-triangle-bottom"></span>
 						{% endif %}
 						</a></th>
@@ -40,12 +41,12 @@
 				<tbody>
 				{% for p in chartsData %}
 					<tr>
-						<td>{{ p.time }}</td>	
+						<td>{{ p.time }}</td>
 						<td>{{ p.account }}</td>
 						<td>{{ p.name }}</td>
 						<td>{{ p.roundCost }}</td>
 						<td>{{ p.timeCost }}</td>
-						<td>{{ p.message }}</td>					
+						<td class="text-left">{{ p.message }}</td>						
 					</tr>
 				{% endfor %}
 				</tbody>

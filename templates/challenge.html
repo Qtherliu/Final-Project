@@ -4,14 +4,15 @@
 		<meta charset='utf-8'>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/static/stylesheets/style.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<title>1A2B Game Field</title>
 		<script>
 			var ans = []
 			while(ans.length < 4){
-				var randomnumber=Math.ceil(Math.random()*9);
-				if(ans.indexOf(randomnumber) == -1)
-					ans[ans.length]=randomnumber.toString();
+				var randomnumber=Math.ceil(Math.random()*9).toString();
+				if(ans.indexOf(randomnumber) < 0 )
+					ans[ans.length]=randomnumber;
 			}
 			console.log(ans);
 			var round = 0;
@@ -21,7 +22,7 @@
 				if(round == 0) startT = new Date();
 				round++;
 				var guess = $("#guessBox").val().split("");
-				console.log(guess);
+				$("#guessBox").val("");
 				var A=0;
 				var B=0;
 				for(i=0; i<4; i++)
@@ -36,28 +37,41 @@
 				if(A == 4)
 				{
 					var timeCost = new Date() - startT;
-					alert('You got it! timeCost='+timeCost);
+					alert('You got it!\n round:'+ round +', time:'+timeCost+" (millisec)");
 					$("#timeCost").val(timeCost);
 					$("#roundCost").val(round);
 					$("#message").val("defaultMsg");
-					$("#sendResult").submit();				
+					$("#sendResult").submit();	
 				}
+
 			}
 		</script>
 	</head>
 	<body>
-		<div class="container">
-			<h1>1A2B Game Field <small>Challenge</small></h1>
+		<div class="container text-center">
+			<h1><strong><span class="T1">1</span><span class="T2">A</span><span class="T3">2</span><span class="T4">B</span></strong> Game Field</h1>
+			<div class="btn-group" role="group" aria-label="btns">
+				<a class="btn btn-default btn-lg" href="/">Game Charts</a>
+				<a class="btn btn-default btn-lg active" href="/challenge">Take a challenge</a>
+				<a class="btn btn-default btn-lg" href="/beatComputer">Try to beat computer</a>
+				<a class="btn btn-default btn-lg" href="/userInfo/{{ account }}">See your record</a>
+				<a class="btn btn-default btn-lg" href="/logout">Logout</a>
+			</div>
+		</div>
+		<div class="container text-center loginContainer form-inline">
+			<p class="lead">How smart you are?</p>
 			for debug, answer is: <span id="debug"></span><br>
-			<script>$("#debug").text(ans.join(""));</script>
-			<input type="text" id="guessBox" ><button class="btn btn-default" onClick="doGuess()">Guess</button>
-			<table id="resultTB">
-				<thead>
-					<tr><th>Input</th><th>Result</th></tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
+			<script>$("#debug").text(ans.join(""));</script>			
+			<input type="text" id="guessBox" class="form-control"><button type="button" class="btn btn-primary" onClick="doGuess()" style="margin-left:10px;">Guess</button>
+			<div class="jumbotron">
+				<table id="resultTB" class="table table-bordered">
+					<thead>
+						<tr><th class="warning text-center">Input</th><th class="warning text-center">Result</th></tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>			
 			<form id="sendResult" method="POST" action="/challenge">
 				<input type="hidden" name="account" value="{{account}}">
 				<input type="hidden" name="roundCost" id="roundCost">
