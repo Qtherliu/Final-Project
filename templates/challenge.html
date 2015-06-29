@@ -4,8 +4,9 @@
 		<meta charset='utf-8'>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/static/stylesheets/style.css">
+		<link rel="stylesheet" href="/static/stylesheets/style.css">		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<title>1A2B Game Field</title>
 		<script>
 			var ans = []
@@ -14,7 +15,7 @@
 				if(ans.indexOf(randomnumber) < 0 )
 					ans[ans.length]=randomnumber;
 			}
-			console.log(ans);
+			console.log(ans.join(""));
 			var round = 0;
 			var startT;
 			function doGuess()
@@ -37,13 +38,11 @@
 				if(A == 4)
 				{
 					var timeCost = new Date() - startT;
-					alert('You got it!\n round:'+ round +', time:'+timeCost+" (millisec)");
 					$("#timeCost").val(timeCost);
 					$("#roundCost").val(round);
-					$("#message").val("defaultMsg");
-					$("#sendResult").submit();	
+					$(".modal-body h4").text('Round：'+ round +', Time Cost：'+timeCost+" (millisec)");
+					$('#dialog').modal({backdrop:"static"});
 				}
-
 			}
 		</script>
 	</head>
@@ -59,10 +58,10 @@
 			</div>
 		</div>
 		<div class="container text-center loginContainer form-inline">
-			<p class="lead">How smart you are?</p>
+			<p class="lead">{{ msg }}</p>
 			for debug, answer is: <span id="debug"></span><br>
 			<script>$("#debug").text(ans.join(""));</script>			
-			<input type="text" id="guessBox" class="form-control"><button type="button" class="btn btn-primary" onClick="doGuess()" style="margin-left:10px;">Guess</button>
+			<input type="number" id="guessBox" class="form-control" placeholder="Input your number..."><button type="button" class="btn btn-primary" onClick="doGuess()" style="margin-left:10px;">Guess</button>
 			<div class="jumbotron">
 				<table id="resultTB" class="table table-bordered">
 					<thead>
@@ -72,12 +71,28 @@
 					</tbody>
 				</table>
 			</div>			
-			<form id="sendResult" method="POST" action="/challenge">
-				<input type="hidden" name="account" value="{{account}}">
-				<input type="hidden" name="roundCost" id="roundCost">
-				<input type="hidden" name="timeCost" id="timeCost">
-				<input type="hidden" name="message" id="message">
-			</form>
 		</div>
+		<div class="modal fade" id="dialog">
+			<div class="modal-dialog">
+				<form id="sendResult" class="modal-content" method="POST" action="/challenge">
+					<div class="modal-header">
+						<h3 class="modal-title"><strong><span class="glyphicon glyphicon-thumbs-up"></span> You made it!</strong></h3>
+					</div>
+					<div class="modal-body">
+						<h4></h4><br>
+						<div class="form-group">
+							<label for="message">Say something</label>
+							<input type="text" name="message" id="message" class="form-control" placeholder="Enter message...">
+						</div>
+						<input type="hidden" name="account" value="{{account}}">
+						<input type="hidden" name="roundCost" id="roundCost">
+						<input type="hidden" name="timeCost" id="timeCost">
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Submit your record</button>
+					</div>
+				</form><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 	</body>
 </html>

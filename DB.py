@@ -49,14 +49,15 @@ def getCharts (db, orderBy): #order = roundCost/timeCost
     else:
         c.execute('SELECT user.account, user.name, record.roundCost, record.timeCost, record.time, record.message '
                   'FROM user, record WHERE record.account=user.account ORDER BY record.roundCost')
-    #return #c.fetchall()
     Row = namedtuple('Row', [tup[0] for tup in c.description])
     return [Row(*row) for row in c.fetchall()]
-def getCount (db):
+
+def getUserList (db):
     c = db.cursor()
-    c.execute('SELECT count(*) AS count FROM user')
-    data = c.fetchone()
-    return data
+    c.execute('SELECT * FROM user ORDER BY user.account')
+    Row = namedtuple('Row', [tup[0] for tup in c.description])
+    return [Row(*row) for row in c.fetchall()]
+
 def userRecord (db, account):
     c = db.cursor()
     c.execute('SELECT user.account, user.name, record.roundCost, record.timeCost, record.time, record.message '

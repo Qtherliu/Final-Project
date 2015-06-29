@@ -20,18 +20,29 @@
 		</div>
 		<div class="container text-center loginContainer">
 			<p class="lead">{{msg}}</p>
+			<form method="POST" action="/beatComputer" class="form-inline">
+				<input type="number" name="userNum" class="form-control" placeholder="Input your number..."> <button class="btn btn-success">Send!</button>
+			</form>
 			<div class="jumbotron">
 				<table id="resultTB" class="table table-bordered">
 					<thead>
 						<tr><th class="warning text-center">Input</th><th class="warning text-center">Result</th></tr>
 					</thead>
 					<tbody>
+					{% for p in data %}
+						<tr>
+							<td>{{ p[0] }}</td>
+							<td>{{ p[1] }}</td>			
+						</tr>
+					{% endfor %}
 					</tbody>
 				</table>
-			</div>	
-			<form method="POST" action="/beatComputer">
-				<input type="text" name="userNum"> <button class="btn btn-default">Send your 4 non repeated digits number!</button>
-			</form>
+				{% if count>=3 %}
+					<h3>You win!</h3>
+				{% elif count>0 %}
+					<h3>You loose!</h3>
+				{% endif %}
+			</div>				
 		</div>
 	</body>
 </html>
